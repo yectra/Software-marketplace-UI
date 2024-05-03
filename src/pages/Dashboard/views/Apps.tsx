@@ -8,7 +8,7 @@ import creditcard from '../assets/Descriptionimg/creditcard.jpg'
 import entity from '../assets/Descriptionimg/entity.png'
 import text from '../assets/Descriptionimg/text-sum.png'
 import pdfextrator from '../assets/Descriptionimg/PDF_extractor.png'
-import ccg from '../assets/Logoimg/ccard.jpg'
+import ccg from '../assets/Logoimg/creditcard1.jpg'
 import ee from '../assets/Logoimg/ee.png'
 import pdf1 from '../assets/Logoimg/pdf1.png'
 import pdf from '../assets/Logoimg/pdf.png'
@@ -26,22 +26,6 @@ const Apps = () => {
 }));
       
       const apps = [
-        {
-          title: "JPG Convertor",
-          shortDescription: "It convert the image from any format to jpg .",
-          longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
-          logo: logo_theme,
-          linktorun:"http://localhost:32768/",
-          imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
-      },
-        {
-            title: "Sentimental Analysis",
-            shortDescription: "Analyze sentiments in text quickly and efficiently.",
-            longDescription: "Sentimental Analysis app leverages advanced machine learning models to accurately determine the emotional tone behind words to provide a deeper understanding of the sentiments expressed in social media posts, reviews, and more.",
-            logo: sa,
-            linktorun:"http://localhost:32769/docs",
-            imgdes:"https://d3caycb064h6u1.cloudfront.net/wp-content/uploads/2021/06/sentimentanalysishotelgeneric-2048x803-1.jpg"
-        },
         {
           title: "Credit card Generator",
           shortDescription: "A credit card generator.",
@@ -74,6 +58,22 @@ const Apps = () => {
       linktorun:"https://entity-extractor.azurewebsites.net/docs",
       imgdes:entity
   },
+  {
+    title: "JPG Convertor",
+    shortDescription: "It convert the image from any format to jpg .",
+    longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
+    logo: logo_theme,
+    linktorun:"http://localhost:32768/",
+    imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
+},
+  {
+      title: "Sentimental Analysis",
+      shortDescription: "Analyze sentiments in text quickly and efficiently.",
+      longDescription: "Sentimental Analysis app leverages advanced machine learning models to accurately determine the emotional tone behind words to provide a deeper understanding of the sentiments expressed in social media posts, reviews, and more.",
+      logo: sa,
+      linktorun:"http://localhost:32769/docs",
+      imgdes:"https://d3caycb064h6u1.cloudfront.net/wp-content/uploads/2021/06/sentimentanalysishotelgeneric-2048x803-1.jpg"
+  },
     {
         title: "PDF Generator",
         shortDescription: "Generate PDFs from various data sources.",
@@ -84,9 +84,9 @@ const Apps = () => {
     },
        
         {
-            title: "Design and Publish",
-            shortDescription: "Design and publish your digital content easily.",
-            longDescription: "Design and Publish streamlines the process of creating and distributing digital content, offering tools for design, layout, and publishing all in one platform, ideal for marketers, publishers, and content creators.",
+            title: "Test credit Generator",
+            shortDescription: "A test credit generator is a tool .",
+            longDescription: "The Test Credit Generator is an indispensable tool for software developers, quality assurance professionals, and payment gateway testers.",
             logo: Test,
             linktorun:"",
             imgdes:"hiii"

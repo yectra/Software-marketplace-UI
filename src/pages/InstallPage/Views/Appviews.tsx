@@ -8,7 +8,7 @@ import pdf from "../../Dashboard/assets/Logoimg/pdf.png"
 import pdf1 from "../../Dashboard/assets/Logoimg/pdf1.png"
 import logo_theme from '../../Dashboard/assets/Logoimg/logo_theme.svg'
 import sa from '../../Dashboard/assets/Logoimg/sa.png'
-import ccg from '../../Dashboard/assets/Logoimg/ccard.jpg'
+import ccg from '../../Dashboard/assets/Logoimg/creditcard1.jpg'
 import text from '../../Dashboard/assets/Descriptionimg/text-sum.png'
 import textsummarizer from '../../Dashboard/assets/Logoimg/text-summarizer.png'
 import creditcard from '../../Dashboard/assets/Descriptionimg/creditcard.jpg'
@@ -25,22 +25,6 @@ const Appviews = () => {
       const {title}=location.state
        
       const apps = [
-        {
-          title: "JPG Convertor",
-          shortDescription: "It convert the image from any format to jpg .",
-          longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
-          logo: logo_theme,
-          linktorun:"http://localhost:32768/",
-          imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
-      },
-        {
-            title: "Sentimental Analysis",
-            shortDescription: "Analyze sentiments in text quickly and efficiently.",
-            longDescription: "Sentimental Analysis app leverages advanced machine learning models to accurately determine the emotional tone behind words to provide a deeper understanding of the sentiments expressed in social media posts, reviews, and more.",
-            logo: sa,
-            linktorun:"http://localhost:32769/docs",
-            imgdes:"https://d3caycb064h6u1.cloudfront.net/wp-content/uploads/2021/06/sentimentanalysishotelgeneric-2048x803-1.jpg"
-        },
         {
           title: "Credit card Generator",
           shortDescription: "A credit card generator.",
@@ -80,6 +64,21 @@ const Appviews = () => {
             logo: ee,
             linktorun:"https://entity-extractor.azurewebsites.net/docs",
             imgdes:entity
+        }, {
+          title: "JPG Convertor",
+          shortDescription: "It convert the image from any format to jpg .",
+          longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
+          logo: logo_theme,
+          linktorun:"http://localhost:32768/",
+          imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
+      },
+        {
+            title: "Sentimental Analysis",
+            shortDescription: "Analyze sentiments in text quickly and efficiently.",
+            longDescription: "Sentimental Analysis app leverages advanced machine learning models to accurately determine the emotional tone behind words to provide a deeper understanding of the sentiments expressed in social media posts, reviews, and more.",
+            logo: sa,
+            linktorun:"http://localhost:32769/docs",
+            imgdes:"https://d3caycb064h6u1.cloudfront.net/wp-content/uploads/2021/06/sentimentanalysishotelgeneric-2048x803-1.jpg"
         },
        
         {
