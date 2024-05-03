@@ -51,12 +51,12 @@ export default function Appcard({ title, description, linktorun }:{title:string,
   };
 
   return (
-    <div>
+    <Box>
       <Card variant="outlined" sx={{ width: 378, m: 2, borderRadius: 3 }}>
         <CardContent>
           <Box sx={{ display: "flex", m: 2 }}>
             <Box sx={{
-              width: 30,
+              width: 35,
               height: 30,
               bgcolor: 'black',
               color: '#09FFC4',
@@ -85,8 +85,8 @@ export default function Appcard({ title, description, linktorun }:{title:string,
           <Box sx={{ m: 2 }}>
             <Typography variant='subtitle2'>{description}</Typography>
           </Box>
-          <Box sx={{ m: 2 }}>
-            <Button sx={{ ml: 15, bgcolor: "#0C9DBD" }} variant="contained" onClick={handleRunButtonClick}>Run</Button>
+          <Box sx={{ m: 2 ,display:"flex",justifyContent:"center"}}>
+            <Button sx={{  bgcolor: "#0C9DBD",width:150,borderRadius:20}} variant="contained" onClick={handleRunButtonClick}>Run</Button>
           </Box>
         </CardContent>
       </Card>
@@ -114,6 +114,6 @@ export default function Appcard({ title, description, linktorun }:{title:string,
           </CloseButton>
         </IframeContainer>
       </StyledModal>
-    </div>
+    </Box>
   );
 }

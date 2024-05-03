@@ -1,5 +1,6 @@
 import {
     Box,
+    IconButton,
     List,
     ListItem,
     ListItemText,
@@ -29,14 +30,18 @@ import {
                     key={text}
                     sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   >
+                   <IconButton sx={{color:"black"}}>
                     {text === "Home" && <HomeIcon />}
                     {text === "Apps" && <AppsIcon />}
                     {text === "Files" && <FileOpenIcon />}
                     {text === "Marketplace" && <AddShoppingCartIcon />}
+                    </IconButton>
                     <ListItemText primary={text} />
                   </ListItem>
+                 
                 ))}
               </List>
+              
             </Box>
           </Box>
         );

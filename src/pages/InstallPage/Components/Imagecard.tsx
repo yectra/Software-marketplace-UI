@@ -9,7 +9,7 @@ const Imagecard = () => {
 
   
   return (
-    <Card sx={{ mt: 6, m: 3, mr: 3, borderRadius: 2 }}>
+    <Card sx={{ mt:2, borderRadius: 2 }}>
     <CardMedia
       sx={{ height: 270, width: 800, overflow: 'hidden' }}
     >
@@ -19,7 +19,7 @@ const Imagecard = () => {
         style={{
           height: '100%',
           width: '100%',
-          objectFit: 'contain', 
+          objectFit:"fill", 
           display: 'block'
         }}
       />

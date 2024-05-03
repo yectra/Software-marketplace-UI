@@ -99,7 +99,7 @@ const Appviews = () => {
         }
     ];
   return (
-    <Box sx={{ m: 2 }}>
+    <Box sx={{ m:2 }}>
       <Typography variant="h6" sx={{ color: "#6D6767" }}>People also use</Typography>
       <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} columns={{ xs: 6, sm: 12, md: 12 }}>
       {apps.filter(app => app.title !== title).map((app, index) => (
