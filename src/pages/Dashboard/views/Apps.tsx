@@ -3,29 +3,38 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import textsummarizer from '../assets/Logoimg/text-summarizer.png'
+import textsummarizer from '../assets/Logoimg/text_summarizer.png'
 import creditcard from '../assets/Descriptionimg/creditcard.jpg'
 import entity from '../assets/Descriptionimg/entity.png'
 import text from '../assets/Descriptionimg/text-sum.png'
 import pdfextrator from '../assets/Descriptionimg/PDF_extractor.png'
-import ccg from '../assets/Logoimg/creditcard1.jpg'
+import incometax from '../assets/Descriptionimg/income-tax.jpg'
+import ccg from '../assets/Logoimg/ccard.png'
 import ee from '../assets/Logoimg/ee.png'
 import pdf1 from '../assets/Logoimg/pdf1.png'
 import pdf from '../assets/Logoimg/pdf.png'
 import sa from '../assets/Logoimg/sa.png'
 import tc from '../assets/Logoimg/tc.png'
 import Test from '../assets/Logoimg/Test.png'
-import logo_theme from '../assets/Logoimg/logo_theme.svg'
+import jpg from '../assets/Logoimg/Thumbnail.png'
 const Apps = () => {
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
-    height: '110px', 
+    height: '115px', 
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between' 
 }));
       
       const apps = [
+        {
+          title: "JPG Convertor",
+          shortDescription: "It convert the image from any format to jpg .",
+          longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
+          logo: jpg,
+          linktorun:"http://localhost:32768/",
+          imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
+      },
         {
           title: "Credit card Generator",
           shortDescription: "A credit card generator.",
@@ -59,13 +68,14 @@ const Apps = () => {
       imgdes:entity
   },
   {
-    title: "JPG Convertor",
-    shortDescription: "It convert the image from any format to jpg .",
+    title: "Tax Calculator",
+    shortDescription: "Calculate taxes with ease.",
     longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
-    logo: logo_theme,
-    linktorun:"http://localhost:32768/",
-    imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
+    logo: tc,
+    linktorun:"",
+    imgdes:incometax
 },
+
   {
       title: "Sentimental Analysis",
       shortDescription: "Analyze sentiments in text quickly and efficiently.",
@@ -88,14 +98,6 @@ const Apps = () => {
             shortDescription: "A test credit generator is a tool .",
             longDescription: "The Test Credit Generator is an indispensable tool for software developers, quality assurance professionals, and payment gateway testers.",
             logo: Test,
-            linktorun:"",
-            imgdes:"hiii"
-        },
-        {
-            title: "Tax Calculator",
-            shortDescription: "Calculate taxes with ease.",
-            longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
-            logo: tc,
             linktorun:"",
             imgdes:"hiii"
         }

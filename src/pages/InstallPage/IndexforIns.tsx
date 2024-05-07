@@ -39,7 +39,7 @@ const IndexforIns = () => {
               linktorun={currentLinkToRun}
             />
           </Box>
-          <Box>
+          <Box sx={{ display: "flex",flexDirection:"column",flexGrow:1,m:2}}>
             <Imagecard />
             <Appviews />
           </Box>

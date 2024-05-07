@@ -37,9 +37,9 @@ const Appdetails = ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: '100%',
-        maxWidth: '300px', 
+        maxWidth: '100%', 
         '@media (max-width: 600px)': {
-          maxWidth: '200px', 
+          maxWidth: '100%', 
         },
       }}
     >
@@ -74,7 +74,7 @@ const Appdetails = ({
             }}
           />
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'end' }}>
           <InstallDesktopIcon />
           <StayPrimaryLandscapeIcon sx={{ ml: 1 }} />
         </Box>
@@ -94,7 +94,7 @@ const Appdetails = ({
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'end',
           justifyContent: 'space-between',
           marginTop: 'auto',
         }}
@@ -113,7 +113,6 @@ const Appdetails = ({
           sx={{
             height: 28,
             width: 80,
-            p: 1,
             borderRadius: '15px',
             border: '1px solid #000000',
             color: '#000000',

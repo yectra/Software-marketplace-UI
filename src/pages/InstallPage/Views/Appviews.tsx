@@ -6,11 +6,11 @@ import tc from "../../Dashboard/assets/Logoimg/tc.png"
 import ee from "../../Dashboard/assets/Logoimg/ee.png"
 import pdf from "../../Dashboard/assets/Logoimg/pdf.png"
 import pdf1 from "../../Dashboard/assets/Logoimg/pdf1.png"
-import logo_theme from '../../Dashboard/assets/Logoimg/logo_theme.svg'
+import jpg from '../../Dashboard/assets/Logoimg/Thumbnail.png'
 import sa from '../../Dashboard/assets/Logoimg/sa.png'
-import ccg from '../../Dashboard/assets/Logoimg/creditcard1.jpg'
+import ccg from '../../Dashboard/assets/Logoimg/ccard.png'
 import text from '../../Dashboard/assets/Descriptionimg/text-sum.png'
-import textsummarizer from '../../Dashboard/assets/Logoimg/text-summarizer.png'
+import textsummarizer from '../../Dashboard/assets/Logoimg/text_summarizer.png'
 import creditcard from '../../Dashboard/assets/Descriptionimg/creditcard.jpg'
 import entity from '../../Dashboard/assets/Descriptionimg/entity.png'
 import Test from '../../Dashboard/assets/Logoimg/Test.png'
@@ -19,12 +19,21 @@ import { useLocation } from "react-router-dom";
 const Appviews = () => {
     const Item = styled(Paper)(({ theme }) => ({
         padding: theme.spacing(2),
+        height: "115px", 
        
       }));
       const location=useLocation()
       const {title}=location.state
        
       const apps = [
+        {
+          title: "JPG Convertor",
+          shortDescription: "It convert the image from any format to jpg .",
+          longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
+          logo: jpg,
+          linktorun:"http://localhost:32768/",
+          imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
+      },
         {
           title: "Credit card Generator",
           shortDescription: "A credit card generator.",
@@ -64,14 +73,7 @@ const Appviews = () => {
             logo: ee,
             linktorun:"https://entity-extractor.azurewebsites.net/docs",
             imgdes:entity
-        }, {
-          title: "JPG Convertor",
-          shortDescription: "It convert the image from any format to jpg .",
-          longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
-          logo: logo_theme,
-          linktorun:"http://localhost:32768/",
-          imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
-      },
+        },
         {
             title: "Sentimental Analysis",
             shortDescription: "Analyze sentiments in text quickly and efficiently.",
@@ -99,26 +101,34 @@ const Appviews = () => {
         }
     ];
   return (
-    <Box sx={{ m:2 }}>
-      <Typography variant="h6" sx={{ color: "#6D6767" }}>People also use</Typography>
-      <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} columns={{ xs: 6, sm: 12, md: 12 }}>
-      {apps.filter(app => app.title !== title).map((app, index) => (
-          <Grid item xs={6} sm={6} md={6} key={index}>
-            <Item>
-              <Appdetails
-                title={app.title}
-                shdescription={app.shortDescription}
-                logo={app.logo}
-                lndescription={app.longDescription}
-                linktorun={app.linktorun}
-                imgdes={app.imgdes}
-              />
-            </Item>
-          </Grid>
-        ))}
+    <Box sx={{ m: 2 }}>
+      <Typography variant="h6" sx={{ color: "#6D6767",m:2 }}>
+        People also use
+      </Typography>
+      <Grid
+        container
+        spacing={{ xs: 2, sm: 2, md: 3 }}
+        columns={{ xs: 6, sm: 12, md: 12 }}
+      >
+        {apps
+          .filter((app) => app.title !== title)
+          .map((app, index) => (
+            <Grid item xs={6} sm={6} md={6} key={index}>
+              <Item>
+                <Appdetails
+                  title={app.title}
+                  shdescription={app.shortDescription}
+                  logo={app.logo}
+                  lndescription={app.longDescription}
+                  linktorun={app.linktorun}
+                  imgdes={app.imgdes}
+                />
+              </Item>
+            </Grid>
+          ))}
       </Grid>
     </Box>
-  )
-}
+  );
+};
 
 export default Appviews
