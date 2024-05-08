@@ -97,9 +97,6 @@ export default function Appcard({ title, description, linktorun }:{title:string,
           aria-describedby={description}
       >
         <IframeContainer>
-          <Typography variant="h6" component="h2" sx={{ mt: 2, color: 'black' }}>
-           {title}
-          </Typography>
           <iframe
               src={linktorun}
               style={{

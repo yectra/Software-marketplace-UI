@@ -31,7 +31,7 @@ const Appviews = () => {
           shortDescription: "It convert the image from any format to jpg .",
           longDescription: "Tax Calculator provides a quick and accurate way to estimate taxes, considering various factors like income, deductions, and tax credits, simplifying financial planning and budgeting.",
           logo: jpg,
-          linktorun:"http://localhost:32768/",
+          linktorun:"https://nice-bay-075966900.5.azurestaticapps.net/",
           imgdes:"https://static-cse.canva.com/blob/1272305/tools_feature_jpeg-to-jpg_hero_mobile2x.jpg"
       },
         {

@@ -7,7 +7,6 @@ import {
   } from "@mui/material";
   import Drawer from "@mui/material/Drawer";
   import HomeIcon from "@mui/icons-material/Home";
-
   import AppsIcon from "@mui/icons-material/Apps";
   import FileOpenIcon from "@mui/icons-material/FileOpen";
   import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -38,10 +37,8 @@ import {
                     </IconButton>
                     <ListItemText primary={text} />
                   </ListItem>
-                 
                 ))}
               </List>
-              
             </Box>
           </Box>
         );
