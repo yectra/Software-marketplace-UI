@@ -42,10 +42,10 @@ export const Devdocscard = () => {
           Use the Marketplace
         </Typography>
         <Typography variant="subtitle2">
-          Lorem ipsum dolor sit amet consectetur. In id viverra ut venenatis elementum
+        In this tutorial, you'll create an app that users can access in
         </Typography>
         <Typography variant="subtitle2">
-          Nullam duis habitant vulputate pulvinar eget non quis. Quisque diam nascetur
+        You'll generate starter code to develop your app.
         </Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", width: "300px", m: 2 }}>

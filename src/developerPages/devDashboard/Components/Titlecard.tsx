@@ -29,7 +29,7 @@ export const Titlecard = () => {
     </Typography>
 </Box>
         <Box>
-        <Button onClick={handleclick} sx={{  bgcolor: "#0C9DBD",width:150,borderRadius:20}} variant="contained">Create app</Button>
+        <Button onClick={handleclick} sx={{ "&:hover": { bgcolor: "#0C9DBD" } ,bgcolor: "#0C9DBD",width:150,borderRadius:20}} variant="contained">Create app</Button>
         </Box>
     </Box>
   )
