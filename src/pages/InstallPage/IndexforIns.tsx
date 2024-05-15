@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import { useLocation } from 'react-router-dom';
+import { Box, Button } from "@mui/material";
+import { useLocation, useNavigate } from 'react-router-dom';
 import Toolbar from "./Components/Toolbar";
 import Appcard from "./Components/Appcard";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import Appbar from "../../common/components/layout/Appbar";
 
 const IndexforIns = () => {
   const location = useLocation();
+  const navigate=useNavigate();
   window.scrollTo(0,0)
   const { title, lndescription, linktorun } = location.state || { title: '', lndescription: '', linktorun: "" };
 
@@ -45,6 +46,10 @@ const IndexforIns = () => {
           </Box>
         </Box>
       </Box>
+      <Button onClick={()=>{
+        navigate('/developer')
+
+      }}>Developer page</Button>
     </Box>
   );
 }
