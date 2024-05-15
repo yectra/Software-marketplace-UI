@@ -2,8 +2,8 @@ import { Box, Button, Typography, TextField } from "@mui/material";
 
 const Devappcard = () => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", width: "auto", p: 2, boxShadow: 5, borderRadius: 2 }}>
-      <Box sx={{ display: "flex", flexDirection: "column", maxWidth: "100%", height: "auto" }}>
+    <Box sx={{ display: "flex", justifyContent: "center", p: 2, boxShadow: 5, borderRadius: 2 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", maxWidth: "100%", height: "270px" }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
           <Typography variant="h5">Use Marketplace Partners</Typography>
           <Typography variant="subtitle2">Create an App From scratch.</Typography>
