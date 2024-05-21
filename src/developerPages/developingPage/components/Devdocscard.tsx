@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 export const Devdocscard = () => {
   const [activeTool, setActiveTool] = useState("npm");
-  const [copyText, setCopyText] = useState("Npm i @Marketplace/app@latest");
+  const [copyText, setCopyText] = useState("npx degit yectra/smp-template .");
   const [copyMessage, setCopyMessage] = useState("");
 
   const handleToolClick = (tool:string) => {
@@ -14,7 +14,7 @@ export const Devdocscard = () => {
   const getCopyText = (tool:string) => {
     switch (tool) {
       case "npm":
-        return "Npm i @Marketplace/app@latest";
+        return "npx degit yectra/smp-template .";
       case "yarn":
         return "Yarn add @Marketplace/app@latest";
       case "pnpm":
