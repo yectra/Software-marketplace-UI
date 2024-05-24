@@ -18,11 +18,11 @@ const DevsideBar = () => {
       navigate("/developer");
     }
     else if(text=="App Ads"){
-    navigate("/ads")
+    navigate("/developer/ads")
   }
   else if(text=="My Apps")
   {
-    navigate("/dev")
+    navigate("/developer/create")
   }
 }
 

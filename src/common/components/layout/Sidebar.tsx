@@ -10,14 +10,16 @@ import {
   import AppsIcon from "@mui/icons-material/Apps";
   import FileOpenIcon from "@mui/icons-material/FileOpen";
   import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+
+
   
   export default function Sidebar() {
   
       const Drawerlist = (
-          <Box sx={{width: 132, color: "black" }}>
+          <Box sx={{width: "auto", color: "black" }}>
             <Box
               sx={{
-                width: 132,
+                width: "auto",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -43,20 +45,22 @@ import {
           </Box>
         );
     return (
-      <Drawer
+  
+   
+     <Drawer
       variant="permanent"
       sx={{
-        width: 132,
+        width:"auto",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: 132,
+          width: "auto",
           boxSizing: "border-box",
           top: "64px",
         },
       }}
     >
-      {Drawerlist}
-    </Drawer>
+    {Drawerlist}
+    </Drawer> 
     );
   }
   

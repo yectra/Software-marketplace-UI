@@ -6,7 +6,7 @@ export const Titlecard = () => {
     const navigate=useNavigate();
 
     const handleclick=()=>{
-        navigate('/dev')
+        navigate('/developer/create')
 
     }
   return (

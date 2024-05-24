@@ -5,7 +5,7 @@ import Appcard from "./Components/Appcard";
 import { useEffect, useState } from "react";
 import Imagecard from "./Components/Imagecard";
 import Appviews from "./Views/Appviews";
-import Appbar from "../../common/components/layout/Appbar";
+
 
 const IndexforIns = () => {
   const location = useLocation();
@@ -25,9 +25,6 @@ const IndexforIns = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Box>
-        <Appbar />
-      </Box>
       <Box sx={{ bgcolor: "#F1F1F1", mt: 7.5 }}>
         <Toolbar appname={currentTitle} />
       </Box>

@@ -1,13 +1,44 @@
 import { useState } from "react";
 import { Box, Button, Typography, TextField } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Devappcard = () => {
   const [appName, setAppName] = useState("");
   const [developerName, setDeveloperName] = useState("");
   const [developerEmail, setDeveloperEmail] = useState("");
 
-  const handleCreate = () => {
-    // Logic to handle create action
+  const navigate=useNavigate();
+
+  const handleCreate = async () => {
+    const appData = {
+      appname:appName,
+      name:developerName,
+      email:developerEmail,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:32769/createapp', appData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('App created successfully:', response.data);
+        navigate("mailsuccessfullysent")
+        const timer = setTimeout(() => {
+          navigate('/docs'); 
+        }, 2000);
+  
+        return () => clearTimeout(timer);
+        
+      } else {
+        console.error('Failed to create app:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error creating app:', error);
+    }
   };
 
   const isCreateDisabled = !appName || !developerName || !developerEmail;
@@ -58,7 +89,7 @@ const Devappcard = () => {
             }}
           />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between", width: "250px", marginTop:5 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", width: "250px", marginTop: 5 }}>
           <Button
             sx={{
               width: "100px",
@@ -75,7 +106,7 @@ const Devappcard = () => {
             sx={{
               width: "100px",
               bgcolor: isCreateDisabled ? "#D9D9D9" : "#424242",
-              color:isCreateDisabled ? "#6D6767":"white",
+              color: isCreateDisabled ? "#6D6767" : "white",
               border: "0.5px",
               borderRadius: "8px",
               outline: "none",

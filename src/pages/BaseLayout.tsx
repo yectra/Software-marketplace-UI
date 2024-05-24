@@ -1,11 +1,15 @@
-import { Box } from "@mui/material"
+
+import IndexforIns from "./InstallPage/IndexforIns"
+import { useLocation } from "react-router-dom"
 
 
 
 const BaseLayout = () => {
+  const location=useLocation();
   return (
-    <Box sx={{ position: 'relative'}}>
-</Box>
+
+      <IndexforIns key={location.key}/>
+ 
 
   )
 }

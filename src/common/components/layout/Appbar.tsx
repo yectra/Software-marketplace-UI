@@ -1,8 +1,10 @@
-import { AppBar, Toolbar, Typography, InputBase, IconButton, styled } from '@mui/material';
+import { AppBar, Toolbar, Typography, InputBase, IconButton, styled, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import QuestionMarkIcon from '@mui/icons-material/HelpOutline';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Outlet } from 'react-router-dom';
+
 
 const StyledInputBase = styled(InputBase)({
     border: '1px solid #C7C6CE',
@@ -16,6 +18,7 @@ const StyledInputBase = styled(InputBase)({
 
 const Appbar = () => {
   return (
+    <Box>
     <AppBar position="fixed" sx={{bgcolor:"white", zIndex: (theme) => theme.zIndex.drawer + 1 }}>
     <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -45,6 +48,8 @@ const Appbar = () => {
       </div>
     </Toolbar>
   </AppBar>
+  <Outlet/>
+  </Box>
 
   )
 }
