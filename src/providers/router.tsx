@@ -4,12 +4,12 @@ import BaseLayout from "../pages/BaseLayout"
 import Indexdev from "../developerPages/devDashboard/Indexdev"
 import Devdash from "../developerPages/devDashboard/Views/Devdash"
 import Devpage from "../developerPages/developingPage/view/Devpage"
-import BaseforDocs from '../developerPages/appdescription/BaseforDocs'
-import Descriptionview from '../developerPages/appdescription/views/Descriptionview'
-import Functiondesview from '../developerPages/Aboutfunctions.tsx/views/Functiondesview'
-import Adspageview from '../developerPages/developingPage/Appadspage/Adspageview'
-import { Mailsuccesspage } from '../developerPages/developingPage/view/Mailsuccesspage'
-
+import BaseforDocs from '../docsPages/appdescription/BaseforDocs'
+import Descriptionview from '../docsPages/appdescription/views/Descriptionview'
+import Functiondesview from '../docsPages/Aboutfunctions.tsx/views/Functiondesview'
+import Developedapps from '../developerPages/Developerappdetails/views/Developedapps'
+import Uploadapp from '../developerPages/Developerappdetails/components/Uploadapp'
+import Monitorapps from '../developerPages/Developerappdetails/components/Monitorapps'
 
 const route = [
     {
@@ -19,7 +19,6 @@ const route = [
             {
                 path:'',
                 element:<Index />,
-                
             },
             {
                 path:'install',
@@ -40,8 +39,16 @@ const route = [
                 element:<Devpage/>
             },
             {
-                path:"ads",
-                element:<Adspageview/>
+                path:"myapps",
+                element:<Developedapps/>
+            },
+            {
+                path:"upload/:appName",
+                element:<Uploadapp/>
+            },
+            {
+                path:"monitor/:appName",
+                element:<Monitorapps/>
             }
         ]
     },
@@ -52,20 +59,13 @@ const route = [
             {
                 path:"",
                 element:<Descriptionview/>
-            },{
+            },
+            {
                 path:"function",
                 element:<Functiondesview/>
             }
         ]
-    },
-    {
-        path:'mailsuccessfullysent',
-        element:<Mailsuccesspage/>
     }
-  
-]
+];
 
 export default route;
-
-
-

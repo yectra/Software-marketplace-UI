@@ -17,12 +17,12 @@ const DevsideBar = () => {
     if (text=="Home") {
       navigate("/developer");
     }
-    else if(text=="App Ads"){
-    navigate("/developer/ads")
+    else if(text=="Create App"){
+    navigate("/developer/create")
   }
   else if(text=="My Apps")
   {
-    navigate("/developer/create")
+    navigate("/developer/myapps")
   }
 }
 
@@ -30,10 +30,10 @@ const DevsideBar = () => {
     <Drawer
       variant="permanent"
       sx={{
-        width: 140,
-        flexShrink: 0,
+      
+        flexShrink: 1,
         "& .MuiDrawer-paper": {
-          width: 132,
+          
           boxSizing: "border-box",
           top: "64px",
         },
@@ -66,7 +66,7 @@ const DevsideBar = () => {
             </ListItem>
             {index === 1 && (
               <List disablePadding sx={{ display: openApps ? "block" : "none" }}>
-                {["My Apps", "App Ads"].map((subtext) => (
+                {["Create App", "My Apps"].map((subtext) => (
                   <ListItem key={subtext} sx={{ display: "flex", alignItems: "center" }}>
                     <Button
                       onClick={() => handleItemClick(subtext)}

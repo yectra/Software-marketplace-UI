@@ -6,7 +6,7 @@ const Devdash = () => {
   return (
      <Box>
      <Titlecard/>
- </Box>
+    </Box>
   )
 }
 

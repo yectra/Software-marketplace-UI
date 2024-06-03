@@ -1,47 +1,66 @@
-import { useState } from "react";
-import { Box, Button, Typography, TextField } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Button, Typography, TextField, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { loginRequest } from "../../../config/auth";
 
 const Devappcard = () => {
   const [appName, setAppName] = useState("");
   const [developerName, setDeveloperName] = useState("");
-  const [developerEmail, setDeveloperEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const isAuthenticated = useIsAuthenticated();
+  const { instance, accounts } = useMsal();
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated && accounts.length > 0) {
+      const account = accounts[0];
+      console.log(account);
+      const email = account.username; 
+      setUserEmail(email);
+    }
+  }, [isAuthenticated, accounts]);
+
+
 
   const handleCreate = async () => {
+    if (!isAuthenticated) {
+      try {
+        await instance.loginRedirect(loginRequest);
+      } catch (e) {
+        console.error("Login redirect error:", e);
+      }
+      return;
+    }
+
+    setIsLoading(true);
+
     const appData = {
-      appname:appName,
-      name:developerName,
-      email:developerEmail,
+      appname: appName,
+      email: userEmail,
+      username: developerName,
     };
 
     try {
-      const response = await axios.post('http://localhost:32769/createapp', appData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axios.post('http://localhost:2000/details/createapp', appData)
 
       if (response.status === 200) {
         console.log('App created successfully:', response.data);
-        navigate("mailsuccessfullysent")
-        const timer = setTimeout(() => {
-          navigate('/docs'); 
-        }, 2000);
-  
-        return () => clearTimeout(timer);
-        
+        navigate('/developer/myapps');
       } else {
         console.error('Failed to create app:', response.statusText);
       }
     } catch (error) {
       console.error('Error creating app:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const isCreateDisabled = !appName || !developerName || !developerEmail;
+  const isCreateDisabled = !appName || !developerName;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", p: 2, boxShadow: 5, borderRadius: 2 }}>
@@ -75,21 +94,8 @@ const Devappcard = () => {
               },
             }}
           />
-          <Typography variant="subtitle2">Developer Email</Typography>
-          <TextField
-            value={developerEmail}
-            onChange={(e) => setDeveloperEmail(e.target.value)}
-            size="small"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": { borderColor: "black" },
-                "&:hover fieldset": { borderColor: "black" },
-                "&.Mui-focused fieldset": { borderColor: "black" },
-              },
-            }}
-          />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between", width: "250px", marginTop: 5 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", width: "250px", marginTop: 2.5 }}>
           <Button
             sx={{
               width: "100px",
@@ -102,18 +108,18 @@ const Devappcard = () => {
           </Button>
           <Button
             onClick={handleCreate}
-            disabled={isCreateDisabled}
+            disabled={isCreateDisabled || isLoading}
             sx={{
               width: "100px",
-              bgcolor: isCreateDisabled ? "#D9D9D9" : "#424242",
-              color: isCreateDisabled ? "#6D6767" : "white",
+              bgcolor: isCreateDisabled || isLoading ? "#D9D9D9" : "#424242",
+              color: isCreateDisabled || isLoading ? "#6D6767" : "white",
               border: "0.5px",
               borderRadius: "8px",
               outline: "none",
-              "&:hover": { bgcolor: isCreateDisabled ? "#D9D9D9" : "#424242", color: "white" },
+              "&:hover": { bgcolor: isCreateDisabled || isLoading ? "#D9D9D9" : "#424242", color: "white" },
             }}
           >
-            Create
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : "Create"}
           </Button>
         </Box>
       </Box>

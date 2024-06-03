@@ -119,7 +119,7 @@ const Appdetails = ({
             '&:hover': { bgcolor: 'transparent' },
           }}
         >
-          Install
+          Use
         </Button>
       </Box>
     </Box>
