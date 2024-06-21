@@ -51,10 +51,10 @@ export const msalConfig = {
         }
       },
     },
-  },
+  }, 
 };
 
 
 export const loginRequest = {
-  scopes: ['openid', 'profile', 'https://roosYectraStore.onmicrosoft.com/600309b2-0299-4680-adf3-13895f79b9f2/user.read'], // Your actual scope
+  scopes: ['openid', 'profile', 'https://roosYectraStore.onmicrosoft.com/600309b2-0299-4680-adf3-13895f79b9f2/user.read'], //  actual scope
 };

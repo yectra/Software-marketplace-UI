@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 
-import Devappcard from "../components/Devappcard"
-import { Devdocscard } from "../components/Devdocscard"
+import Devappcard from "../components/DevAppCard"
+import { Devdocscard } from "../components/DevDocsCard"
 
 
 const Devpage = () => {

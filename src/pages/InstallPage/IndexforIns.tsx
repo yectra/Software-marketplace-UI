@@ -1,10 +1,10 @@
 import { Box, Button } from "@mui/material";
 import { useLocation, useNavigate } from 'react-router-dom';
-import Toolbar from "./Components/Toolbar";
-import Appcard from "./Components/Appcard";
+import Toolbar from "./components/Toolbar";
+import Appcard from "./components/Appcard";
 import { useEffect, useState } from "react";
-import Imagecard from "./Components/Imagecard";
-import Appviews from "./Views/Appviews";
+import Imagecard from "./components/Imagecard";
+import Appviews from "./views/Appviews";
 
 
 const IndexforIns = () => {

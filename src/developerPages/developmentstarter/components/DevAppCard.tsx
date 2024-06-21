@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../../config/auth";
+import { getUserEmailFromMsal } from "../../../common/services/AuthHelper";
 
 const Devappcard = () => {
   const [appName, setAppName] = useState("");
@@ -16,15 +17,13 @@ const Devappcard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated && accounts.length > 0) {
-      const account = accounts[0];
-      console.log(account);
-      const email = account.username; 
-      setUserEmail(email);
-    }
+    const email=getUserEmailFromMsal(accounts);
+    setUserEmail(email);
   }, [isAuthenticated, accounts]);
 
-
+const displaypopup=({alertmsg}:{alertmsg:string})=>{
+  alert(alertmsg)
+}
 
   const handleCreate = async () => {
     if (!isAuthenticated) {
@@ -45,21 +44,24 @@ const Devappcard = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:2000/details/createapp', appData)
+      console.log(appData);
+      const response = await axios.post("http://localhost:2000/developer/createapp", appData);
+      console.log(response);
 
       if (response.status === 200) {
-        console.log('App created successfully:', response.data);
-        navigate('/developer/myapps');
+        console.log("App created successfully:", response.data);
+        navigate("/developer/myapps");
       } else {
-        console.error('Failed to create app:', response.statusText);
+        console.error("Failed to create app:", response.data);
+        displaypopup(response.data); 
       }
-    } catch (error) {
-      console.error('Error creating app:', error);
+    } catch (error:any) {
+      console.error("Error creating app:", error);
+      displaypopup(error.message); 
     } finally {
       setIsLoading(false);
     }
   };
-
   const isCreateDisabled = !appName || !developerName;
 
   return (

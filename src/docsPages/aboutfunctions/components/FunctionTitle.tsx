@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 
 
-const Functiontitle = () => {
+const FunctionTitle = () => {
   return (
    <Box>
     <Typography variant="h6">About Marketplace Function APIs</Typography>
@@ -13,4 +13,4 @@ const Functiontitle = () => {
   )
 }
 
-export default Functiontitle
+export default FunctionTitle

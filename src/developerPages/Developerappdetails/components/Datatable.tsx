@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -7,48 +7,78 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Link,
   Box,
   Typography,
   TextField,
-  Autocomplete,
   Button,
+  Tabs,
+  Tab,
 } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
+import axios from 'axios';
 import { loginRequest } from '../../../config/auth';
+import { getUserEmailFromMsal } from '../../../common/services/AuthHelper';
+import { MyappsData } from '../model/MyAppsData';
 
-interface Data {
-  name: string;
-  status: string;
-  created: string;
-  size: string;
-}
-
-const rows: Data[] = [
-  { name: 'Jpg converter', status: 'Unused', created: '1 months ago', size: '-' },
-  { name: 'Bg remover', status: 'In use', created: '2 months ago', size: '140.8 MB' },
-  { name: 'Text summerizer', status: 'In use', created: '12 days ago', size: '162.76 MB' },
-  { name: 'Pdf converter', status: 'In use', created: '5 days ago', size: '918.35 MB' },
-];
 
 const DataTable = () => {
+  const [tabValue, setTabValue] = useState(0);
   const navigate = useNavigate();
-  const { instance, inProgress } = useMsal();
+  const [email, setEmail] = useState("");
+  const [rows, setRows] = useState<MyappsData[]>([]);
+  const { instance, inProgress, accounts } = useMsal();
   const isAuthenticated = useIsAuthenticated();
-  const location = useLocation();
 
   useEffect(() => {
- 
-    if (inProgress === null && isAuthenticated) {
-      
-      const redirectUrl = location.state?.from?.pathname || '/';
+   const email=getUserEmailFromMsal(accounts);
+   setEmail(email);
+  }, [isAuthenticated, accounts]);
 
-  
-      navigate(redirectUrl, { replace: true });
+  const fetchData = async ({ status }: { status: string }) => {
+    try {
+      const response = await axios.post("http://localhost:2000/developer/devdisplay", { email, status });
+      console.log(response.data);
+      setRows(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setRows([]); 
     }
-  }, [inProgress, isAuthenticated, location.state, navigate]);
+  };
+
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+    if (newValue === 1) {
+      fetchData({ status: "accepted" });
+    } else if (newValue === 2) {
+      fetchData({ status: "denied" });
+    } else {
+      fetchData({ status: "all" });
+    }
+  };
+
+  useEffect(() => {
+    if (email) {
+      fetchData({ status: "all" });
+    }
+  }, [email]);
+
+  const handleSearch = async (value: string) => {
+    console.log(value);
+    if (value === "") {
+      fetchData({ status: "all" });
+    } else {
+      try {
+        const response = await axios.get(`http://localhost:2000/developer/devsearch/${email}/${value}`);
+        console.log(response.data);
+        setRows(response.data[0]);
+      } catch (error) {
+        console.error("Error searching:", error);
+        setRows([]);
+      }
+    }
+  };
 
   const signInUser = () => {
     if (inProgress === InteractionStatus.None && !isAuthenticated) {
@@ -61,11 +91,15 @@ const DataTable = () => {
   };
 
   const handleUploadClick = (appName: string) => {
-    navigate(`/developer/upload/${encodeURIComponent(appName)}`, { state: { from: location } });
+    navigate(`/developer/update/${encodeURIComponent(appName)}`);
   };
 
   const handleMonitorClick = (appName: string) => {
-    navigate(`/developer/monitor/${encodeURIComponent(appName)}`, { state: { from: location } });
+    navigate(`/developer/monitor/${encodeURIComponent(appName)}`);
+  };
+
+  const handleAppClick = (appName: string) => {
+    navigate(`/developer/appdetails/${encodeURIComponent(appName)}`);
   };
 
   if (!isAuthenticated) {
@@ -92,82 +126,102 @@ const DataTable = () => {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
-        <Typography variant="h6">My Apps</Typography>
-        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
-          <Autocomplete
-            freeSolo
-            id="free-solo-2-demo"
-            disableClearable
-            options={rows.map(option => option.name)}
-            sx={{ width: 300, height: 40 }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label="Find your app"
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-              />
-            )}
-          />
-        </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h6" sx={{ ml: 1 }}>My Apps</Typography>
+        <TextField
+          label="Find your app"
+          variant="outlined"
+          size="medium"
+          onChange={(e) => handleSearch(e.target.value)}
+          sx={{ width: 300 }}
+        />
       </Box>
+      <Tabs
+        value={tabValue}
+        onChange={handleChange}
+        sx={{
+          mb: 4, mt: 2,
+          '& .MuiTabs-indicator': {
+            backgroundColor: '#0C9DBD',
+            height: '2px',
+          },
+          '& .MuiTab-root': {
+            textTransform: 'none',
+            fontWeight: 'bold',
+            minWidth: 100,
+          },
+          '& .Mui-selected': {
+            color: 'black',
+          },
+        }}
+      >
+        <Tab label="All" />
+        <Tab label="Accepted" />
+        <Tab label="Denied" />
+      </Tabs>
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
+                <TableCell>AppName</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Created</TableCell>
-                <TableCell>Size</TableCell>
+                <TableCell>Version</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                  <TableCell>
-                    <Link href="#" underline="none">
-                      {row.name}
-                    </Link>
+              {rows.map?.(row => (
+                <TableRow key={row.appname} hover role="checkbox" tabIndex={-1}>
+                  <TableCell sx={{ cursor: "pointer" }} onClick={() => handleAppClick(row.appname)}>
+                    {row.appname}
+                  </TableCell>
+                  <TableCell sx={{ color: row.status === "In Use" ? "green" : "inherit" }}>
+                    {row.versions.length > 0 ? row.versions[row.versions.length-1].status : 'N/A'}
                   </TableCell>
                   <TableCell>
-                    {row.status === 'In use' ? (
-                      <Link href="#" underline="none">
-                        {row.status}
-                      </Link>
-                    ) : (
-                      row.status
-                    )}
+                    {row.versions.length > 0 ? row.versions[row.versions.length - 1].v : 'N/A'}
                   </TableCell>
-                  <TableCell>{row.created}</TableCell>
-                  <TableCell>{row.size}</TableCell>
                   <TableCell>
-                    {row.status === 'Unused' ? (
+                    {row.versions[row.versions.length-1].approvedStatus==='accepted'? (
                       <Button
                         variant="text"
                         color="primary"
-                        onClick={() => handleUploadClick(row.name)}
+                        onClick={() => handleMonitorClick(row.appname)}
                         style={{ marginLeft: '8px' }}
                       >
-                        Upload
+                        Monitor your site
+                      </Button>
+                    ) : row.versions[row.versions.length-1].approvedStatus == 'pending' ? (
+                      <Button
+                        variant="text"
+                        color="primary"
+                        onClick={() => handleMonitorClick(row.appname)}
+                        style={{ marginLeft: '8px' }}
+                        disabled
+                      >
+                        Monitor your site
                       </Button>
                     ) : (
                       <Button
                         variant="text"
                         color="primary"
-                        onClick={() => handleMonitorClick(row.name)}
+                        onClick={() => handleUploadClick(row.appname)}
                         style={{ marginLeft: '8px' }}
                       >
-                        Monitor your site
+                        Upload
                       </Button>
                     )}
                   </TableCell>
                 </TableRow>
               ))}
+              {rows.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No data available
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

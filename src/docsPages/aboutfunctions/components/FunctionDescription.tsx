@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 
 
-const Functiondes = ({title}:{title:string}) => {
+const FunctionDescription = ({title}:{title:string}) => {
   return (
     <Box sx={{m:2}}>
     <Typography variant="h6">{title}</Typography>
@@ -13,4 +13,4 @@ const Functiondes = ({title}:{title:string}) => {
   )
 }
 
-export default Functiondes
+export default FunctionDescription

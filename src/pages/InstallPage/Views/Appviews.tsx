@@ -1,19 +1,19 @@
 import { Box, Typography,Grid } from "@mui/material"
 import { experimentalStyled as styled } from '@mui/material/styles';
-import Appdetails from "../../Dashboard/components/Appdetails"
+import Appdetails from "../../dashboard/components/Appdetails"
 import Paper from '@mui/material/Paper';
-import tc from "../../Dashboard/assets/Logoimg/tc.png"
-import ee from "../../Dashboard/assets/Logoimg/ee.png"
-import pdf from "../../Dashboard/assets/Logoimg/pdf.png"
-import pdf1 from "../../Dashboard/assets/Logoimg/pdf1.png"
-import jpg from '../../Dashboard/assets/Logoimg/Thumbnail.png'
-import sa from '../../Dashboard/assets/Logoimg/sa.png'
-import ccg from '../../Dashboard/assets/Logoimg/ccard.png'
-import text from '../../Dashboard/assets/Descriptionimg/text-sum.png'
-import textsummarizer from '../../Dashboard/assets/Logoimg/text_summarizer.png'
-import creditcard from '../../Dashboard/assets/Descriptionimg/creditcard.jpg'
-import entity from '../../Dashboard/assets/Descriptionimg/entity.png'
-import Test from '../../Dashboard/assets/Logoimg/Test.png'
+import tc from "../../dashboard/assets/Logoimg/tc.png"
+import ee from "../../dashboard/assets/Logoimg/ee.png"
+import pdf from "../../dashboard/assets/Logoimg/pdf.png"
+import pdf1 from "../../dashboard/assets/Logoimg/pdf1.png"
+import jpg from '../../dashboard/assets/Logoimg/Thumbnail.png'
+import sa from '../../dashboard/assets/Logoimg/sa.png'
+import ccg from '../../dashboard/assets/Logoimg/ccard.png'
+import text from '../../dashboard/assets/Descriptionimg/text-sum.png'
+import textsummarizer from '../../dashboard/assets/Logoimg/text_summarizer.png'
+import creditcard from '../../dashboard/assets/Descriptionimg/creditcard.jpg'
+import entity from '../../dashboard/assets/Descriptionimg/entity.png'
+import Test from '../../dashboard/assets/Logoimg/Test.png'
 import { useLocation } from "react-router-dom";
 
 const Appviews = () => {

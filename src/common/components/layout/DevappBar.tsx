@@ -1,10 +1,12 @@
+
 import { AppBar, Toolbar, Button, InputBase, IconButton, styled, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
-import { loginRequest } from '../../../config/auth';
+
 import { useNavigate } from 'react-router-dom';
+import { signInUser, signOutUser } from '../../services/AuthHelper';
+import { PublicClientApplication } from '@azure/msal-browser';
 
 const StyledInputBase = styled(InputBase)({
   border: '1px solid #C7C6CE',
@@ -12,7 +14,6 @@ const StyledInputBase = styled(InputBase)({
   padding: '1px 40px',
   width: 350,
   height: 40,
-
 });
 
 const DevappBar = () => {
@@ -20,27 +21,20 @@ const DevappBar = () => {
   const handleTitleClick = () => {
     navigate("/developer");
   };
-  const { instance, inProgress } = useMsal();
+  const { instance, inProgress} = useMsal();
   const isAuthenticated = useIsAuthenticated();
+  const typedInstance = instance as PublicClientApplication;
 
-  const signInUser = async () => {
-    try {
-      if (inProgress === InteractionStatus.None && !isAuthenticated) {
-        await instance.loginRedirect(loginRequest);
-      }
-    } catch (e) {
-      console.error('Login redirect error:', e);
-    }
+  const handleSignIn = (): void => {
+    signInUser(typedInstance, inProgress, isAuthenticated);
   };
 
-  const signOutUser = () => {
-    instance.logoutRedirect({
-      postLogoutRedirectUri: "/",
-    });
+  const handleSignOut = (): void => {
+    signOutUser(typedInstance, "/developer");
   };
 
   return (
-    <Box sx={{  }}>
+    <Box>
       <AppBar position="fixed" sx={{ bgcolor: 'white', boxShadow: 'none', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Button variant="text" sx={{ color: '#0C9DBD', fontSize: '1.10rem' }} onClick={handleTitleClick}>
@@ -60,11 +54,11 @@ const DevappBar = () => {
               <NotificationsIcon sx={{ color: 'black' }} />
             </IconButton>
             {isAuthenticated ? (
-              <Button variant="text" sx={{ color: 'black' }} onClick={signOutUser}>
+              <Button variant="text" sx={{ color: 'black' }} onClick={handleSignOut}>
                 Logout
               </Button>
             ) : (
-              <Button variant="text" sx={{ color: 'black' }} onClick={signInUser}>
+              <Button variant="text" sx={{ color: 'black' }} onClick={handleSignIn}>
                 Login
               </Button>
             )}

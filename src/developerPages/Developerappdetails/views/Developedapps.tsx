@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import DataTable from "../components/Datatable"
+import DataTable from "../components/DataTable"
 
 const Developedapps = () => {
   return (

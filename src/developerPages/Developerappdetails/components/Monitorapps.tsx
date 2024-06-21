@@ -10,7 +10,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import Monitortable from './Monitortable';
+import Monitortable from './MonitorTable';
+import Dockerlogs from "./Dockerlogs";
 
 
 ChartJS.register(
@@ -54,7 +55,11 @@ const Monitorapps=() => {
   return (
     <Box p={2}>
         <Monitortable/>
-      <Box sx={{display:"flex",justifyContent:"space-around",mt:2}}>
+        <Box sx={{mt:2,mb:2}}>
+        <Dockerlogs/>
+        </Box>
+      
+      <Box sx={{display:"flex",justifyContent:"space-around",mt:4}}>
       <Box  sx={
         {
             height:450,
@@ -79,6 +84,7 @@ const Monitorapps=() => {
         <Line data={requestData} />
       </Box>
       </Box>
+
     </Box>
   );
 };
