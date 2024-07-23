@@ -11,7 +11,7 @@ const StyledInputBase = styled(InputBase)({
     marginLeft: 200
 });
 
-const Appadsnavbar = () => {
+const DocsNavbar = () => {
     return (
         <AppBar position="fixed" sx={{ bgcolor: "white", zIndex: (theme) => theme.zIndex.drawer + 1, boxShadow: 'none' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -43,4 +43,4 @@ const Appadsnavbar = () => {
     )
 }
 
-export default Appadsnavbar;
+export default DocsNavbar;

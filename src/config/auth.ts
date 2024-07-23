@@ -15,7 +15,7 @@ export const b2cPolicies = {
 
 export const msalConfig = {
   auth: {
-    clientId: "600309b2-0299-4680-adf3-13895f79b9f2",
+    clientId: "372ec708-eade-43d1-aaa8-749bf95aed73",
     authority: b2cPolicies.authorities.signUpSignIn.authority,
     knownAuthorities: [b2cPolicies.authorityDomain],
     redirectUri: '/developer',
@@ -56,5 +56,6 @@ export const msalConfig = {
 
 
 export const loginRequest = {
-  scopes: ['openid', 'profile', 'https://roosYectraStore.onmicrosoft.com/600309b2-0299-4680-adf3-13895f79b9f2/user.read'], //  actual scope
+  scopes: ["https://roosYectraStore.onmicrosoft.com/softwaremarketplace/tasks.write", "openid", "profile", "offline_access"],
+
 };

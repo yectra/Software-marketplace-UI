@@ -1,108 +1,140 @@
-import Appbar from '../common/components/layout/Appbar'
-import Index from "../pages/dashboard/Index"
-import BaseLayout from "../pages/BaseLayout"
-import Indexdev from "../developerpages/devdashboard/Indexdev"
-import Devdash from "../developerpages/devdashboard/Views/Devdash"
-import Devpage from "../developerpages/developmentstarter/view/DevPage"
-import BaseforDocs from '../docspages/appdescription/BaseforDocs'
-import Descriptionview from '../docspages/appdescription/views/Descriptionview'
-import Functiondesview from '../docspages/aboutfunctions/views/Functiondesview'
-import Developedapps from '../developerpages/developerappdetails/views/DevelopedApps'
-import Monitorapps from '../developerpages/developerappdetails/components/MonitorApps'
-import Availabletools from '../docspages/developertools/views/Availabletools'
-import Updatedetails from '../developerpages/updateapp/components/UpdateDetails'
-import IndexforAdmin from '../adminpanel/admindashboard/IndexforAdmin'
-import Detailedview from '../adminpanel/admindashboard/views/Detailedview'
-import ApprovedApps from '../adminpanel/admindashboard/views/ApprovedApps'
-
-import DeniedApps from '../adminpanel/admindashboard/views/DeniedApps'
-
-import AppOverview from '../developerpages/appdescription/components/AppOverview'
+import React from 'react';
 
 
-const route = [
+// Base 
+const MainLayout = React.lazy(() => import("@/pages/MainLayout"));
+
+// User Portal
+const Home = React.lazy(() => import("@/pages/userportal/Index"));
+const AppMarketplace = React.lazy(() => import("@/pages/userportal/dashboard/views/AppMarketplace"));
+const AppDescriptionPage=React.lazy(()=>import('@/pages/userportal/appoverview/views/AppDescriptionPage'));
+
+
+// Developer Portal
+const DeveloperHome = React.lazy(() => import("@/pages/developerportal/Indexdev"));
+const UserProfile=React.lazy(()=>import('@/pages/developerportal/devdashboard/Components/UserProfile'))
+const DevDashboard=React.lazy(()=>import('@/pages/developerportal/devdashboard/Views/DevDashboard'))
+const BuildApp = React.lazy(() => import('@/pages/developerportal/developmentstarter/view/BuildApp'));
+const DeveloperApps = React.lazy(() => import('@/pages/developerportal/developerappdetails/views/DeveloperApps'));
+const ManageAppdetails=React.lazy(()=>import ('@/pages/developerportal/updateapp/views/ManageAppdetails'))
+const DeploymentDetails=React.lazy(()=>import('@/pages/developerportal/developerappdetails/views/DeploymentDetails'))
+const UpdateDetails = React.lazy(() => import('@/pages/developerportal/updateapp/components/UpdateDetails'));
+const PreviousVersionsData=React.lazy(()=>import('@/pages/developerportal/appdescription/views/PreviousVersionsData'))
+
+
+// Docs Pages
+const DocsOverview = React.lazy(() => import('@/pages/docspages/BaseforDocs'));
+const DescriptionView = React.lazy(() => import('@/pages/docspages/appdescription/views/Descriptionview'));
+const FunctionDesView = React.lazy(() => import('@/pages/docspages/aboutfunctions/views/Functiondesview'));
+const AvailableTools = React.lazy(() => import('@/pages/docspages/developertools/views/Availabletools'));
+
+// Admin Panel
+const AdminOverview = React.lazy(() => import('@/pages/adminpanel/admindashboard/IndexforAdmin'));
+const DetailedView = React.lazy(() => import('@/pages/adminpanel/admindashboard/views/Detailedview'));
+const ApprovedApps = React.lazy(() => import('@/pages/adminpanel/admindashboard/views/ApprovedApps'));
+const DeniedApps = React.lazy(() => import('@/pages/adminpanel/admindashboard/views/DeniedApps'));
+const DeploymentCenter= React.lazy(() => import('@/pages/adminpanel/admindashboard/views/DeploymentCenter'));
+
+
+const routes = [
     {
-        path:'/',
-        element:<Appbar />,
-        children:[
-            {
-                path:'',
-                element:<Index />,
-            },
-            {
-                path:'install',
-                element:<BaseLayout/>,
-            }
-        ]
-    },
-    {
-        path:'developer',
-        element:<Indexdev/>,
-        children:[
-            {
-                path:"",
-                element:<Devdash/>
-            },
-            {
-                path:"create",
-                element:<Devpage/>
-            },
-            {
-                path:"myapps",
-                element:<Developedapps/>
-            },
-            {
-                path:"monitor/:appName",
-                element:<Monitorapps/>
-            },
-            {
-                path:"update/:appName",
-                element:<Updatedetails/>
-            },
-            {
-                path:"appdetails/:appName",
-                element:<AppOverview/>
-            }
-        ]
-    },
-    {
-        path:'docs',
-        element:<BaseforDocs/>,
+        path: '/',
+        element: <MainLayout />,
         children: [
             {
-                path:"",
-                element:<Descriptionview/>
+                path: '',
+                element: <Home />,
+                children: [
+                    {
+                        path: '',
+                        element: <AppMarketplace />
+                    },
+                    {
+                        path: 'app/:id',
+                        element: <AppDescriptionPage />
+                    },
+                ]
             },
             {
-                path:"function",
-                element:<Functiondesview/>
+                path: 'developer',
+                element: <DeveloperHome />,
+                children: [
+                    {
+                        path: '',
+                        element: <DevDashboard />
+                    },
+                    {
+                        path: 'profile',
+                        element: <UserProfile />
+                    },
+                    {
+                        path: 'create-app',
+                        element: <BuildApp />
+                    },
+                    {
+                        path: 'myapps',
+                        element: <DeveloperApps />
+                    },
+                    {
+                        path: 'upload/:appName',
+                        element: <ManageAppdetails />
+                    },
+                    {
+                        path: 'monitor/:appName',
+                        element: <DeploymentDetails />
+                    },
+                    {
+                        path: 'update/:appName',
+                        element: <UpdateDetails />
+                    },
+                    {
+                        path: 'appdetails/:appName',
+                        element: <PreviousVersionsData />
+                    }
+                ]
             },
             {
-                path:"developertools",
-                element:<Availabletools/>
+                path: 'docs',
+                element: <DocsOverview />,
+                children: [
+                    {
+                        path: '',
+                        element: <DescriptionView />
+                    },
+                    {
+                        path: 'function',
+                        element: <FunctionDesView />
+                    },
+                    {
+                        path: 'developertools',
+                        element: <AvailableTools />
+                    }
+                ]
+            },
+            {
+                path: 'admin',
+                element: <AdminOverview />,
+                children: [
+                    {
+                        path: '',
+                        element: <DetailedView />
+                    },
+                    {
+                        path: 'approved',
+                        element: <ApprovedApps />
+                    },
+                    {
+                        path: 'denied',
+                        element: <DeniedApps />
+                    },
+                    {
+                        path:'deployment-center',
+                        element:<DeploymentCenter/>
+                    }
+                ]
             }
-        ]
-    },
-    {
-        path:'admin',
-        element:<IndexforAdmin/>,
-        children:[
-           {
-                path:"",
-                element:<Detailedview/>
-            },
-            {
-                path:"approved",
-                element:<ApprovedApps/>
-            },
-            {
-                path:"denied",
-                element:<DeniedApps/>
-            }
-            
-
         ]
     }
 ];
 
-export default route;
+export default routes;

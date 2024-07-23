@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-const Appadssidebar = () => {
+const DocsSidebar = () => {
 
   const[activeitem,setactiveitem]=useState("Overview");
   const navigate=useNavigate();
@@ -58,10 +58,9 @@ const Appadssidebar = () => {
     <Drawer
     variant="permanent"
     sx={{
-      width: 132,
-      flexShrink: 0,
+      width: 170,
       "& .MuiDrawer-paper": {
-        width: "auto",
+        width: 170,
         boxSizing: "border-box",
         top: "64px",
       },
@@ -72,4 +71,4 @@ const Appadssidebar = () => {
   )
 }
 
-export default Appadssidebar
+export default DocsSidebar;

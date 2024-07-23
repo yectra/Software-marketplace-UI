@@ -19,7 +19,7 @@ const AdminSidebar = () => {
     setactiveitem(text);
   if(text=="Approved Apps")
     {
-      navigate("approved")
+      navigate("admin/approved")
 
     }
     else if(text=="Denied Apps")
@@ -29,10 +29,7 @@ const AdminSidebar = () => {
       }
       else{
         navigate("/admin")
-
       }
-   
-  
 
   }
     const Drawerlist = (
@@ -45,7 +42,7 @@ const AdminSidebar = () => {
             }}
           >
             <List>
-              {["Overview", "Approved Apps","Denied Apps"].map((text) => (
+              {["Overview", "Approved Apps","Denied Apps","Deployment Center"].map((text) => (
                 <ListItem
                   key={text}
                   onClick={()=>handleclick({text})}
@@ -64,7 +61,7 @@ const AdminSidebar = () => {
     <Drawer
     variant="permanent"
     sx={{
-      width: 132,
+      width:"auto",
       flexShrink: 0,
       "& .MuiDrawer-paper": {
         width: "auto",

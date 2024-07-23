@@ -1,90 +1,75 @@
 import React, { useState } from 'react';
-import { Button, List, ListItem, ListItemText } from "@mui/material";
-import Drawer from "@mui/material/Drawer";
+import { List, ListItem, ListItemText, Collapse, Drawer, Typography} from "@mui/material";
 import AppsIcon from "@mui/icons-material/Apps";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from 'react-router-dom';
 
 const DevsideBar = () => {
   const [openApps, setOpenApps] = useState(true);
-  const [activeItem, setActiveItem] = useState("");
+  const [activeItem, setActiveItem] = useState("Home");
   const navigate = useNavigate();
 
   const handleItemClick = (text: string) => {
     setActiveItem(text);
     if (text === "Apps") setOpenApps(!openApps);
-
-    if (text=="Home") {
+    if (text === "Home") {
       navigate("/developer");
+    } else if (text === "Create App") {
+      navigate("/developer/create-app");
+    } else if (text === "My Apps") {
+      navigate("/developer/myapps");
     }
-    else if(text=="Create App"){
-    navigate("/developer/create")
-  }
-  else if(text=="My Apps")
-  {
-    navigate("/developer/myapps")
-  }
-}
+  };
 
   return (
     <Drawer
       variant="permanent"
       sx={{
-      
-        flexShrink: 1,
+        width: 175, 
+        flexShrink: 0,
         "& .MuiDrawer-paper": {
-          
+          width: 175, 
           boxSizing: "border-box",
           top: "64px",
+          cursor:"pointer"
         },
       }}
     >
       <List>
-        {["Home", "Apps"].map((text, index) => (
+        {["Home", "Apps"].map((text) => (
           <React.Fragment key={text}>
             <ListItem
+              onClick={() => handleItemClick(text)}
               sx={{
                 display: "flex",
-                alignItems: "center",
                 color: activeItem === text ? "lightblue" : "black",
               }}
             >
-              <Button
-                onClick={() => handleItemClick(text)}
-                sx={{
-                  color: activeItem === text ? "lightblue" : "inherit",
-                  fontSize: '1rem',
-                  "&:hover": {
-                    color: "lightblue",
-                  }
-                }}
-              >
-                {text === "Home" && <HomeIcon sx={{ m: 1 }} />}
-                {text === "Apps" && <AppsIcon sx={{ m: 1 }} />}
-                <ListItemText primary={text} />
-              </Button>
+                {text === "Home" ? <HomeIcon /> : <AppsIcon />}
+              <ListItemText primary={text} sx={{fontWeight:"bold",ml:2}} />
             </ListItem>
-            {index === 1 && (
-              <List disablePadding sx={{ display: openApps ? "block" : "none" }}>
-                {["Create App", "My Apps"].map((subtext) => (
-                  <ListItem key={subtext} sx={{ display: "flex", alignItems: "center" }}>
-                    <Button
+            {text === "Apps" && (
+              <Collapse in={openApps} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {["Create App", "My Apps"].map((subtext) => (
+                    <ListItem
+                      key={subtext}
                       onClick={() => handleItemClick(subtext)}
-                      variant='text'
-                      size='small'
                       sx={{
-                        ml: 4,
                         color: activeItem === subtext ? "lightblue" : "black",
-                        "&:hover": {
-                          color: "lightblue",
-                        },
                       }}
                     >
-                      {subtext}
-                    </Button>
-                  </ListItem>
-                ))}
-              </List>
+                      <ListItemText
+                        primary={
+                          <Typography variant="body2" sx={{ fontSize: '0.875rem', ml: 5}}>
+                            {subtext}
+                          </Typography>
+                        }
+                      /> 
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
             )}
           </React.Fragment>
         ))}

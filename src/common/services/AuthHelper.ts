@@ -1,9 +1,10 @@
 import { loginRequest } from '../../config/auth';
+import { InteractionStatus, IPublicClientApplication, AccountInfo } from '@azure/msal-browser';
 
-import { PublicClientApplication, InteractionStatus } from '@azure/msal-browser';
+
 
 export const signInUser = async (
-  instance: PublicClientApplication, 
+  instance: IPublicClientApplication, 
   inProgress: InteractionStatus, 
   isAuthenticated: boolean
 ) => {
@@ -17,19 +18,33 @@ export const signInUser = async (
 };
 
 export const signOutUser = (
-  instance: PublicClientApplication, 
+  instance: IPublicClientApplication, 
   postLogoutRedirectUri: string = "/"
 ): void => {
   instance.logoutRedirect({
     postLogoutRedirectUri: postLogoutRedirectUri,
   });
 };
-// AuthHelper.ts
-export const getUserEmailFromMsal = (accounts: any[]) => {
-    if (accounts.length > 0) {
-      const account = accounts[0];
-      return account.username;
-    }
-    return '';
+
+
+interface AccountDetails {
+  email: string;
+  name: string | any;
+}
+
+
+export const getUserDetailsFromMsal = (accounts: AccountInfo[]): AccountDetails => {
+  if (accounts.length > 0) {
+    const account = accounts[0];
+    console.log(account);
+    return {
+      email: account.username, 
+      name: account.idTokenClaims?.given_name || '', 
+    };
+  }
+  return {
+    email: '',
+    name: '',
   };
-  
+};
+

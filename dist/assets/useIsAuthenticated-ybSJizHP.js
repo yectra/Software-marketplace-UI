@@ -1,0 +1,1 @@
+import{r,L as n}from"./index-D0H8proF.js";import{u}from"./AuthHelper-DS3yPrno.js";/*! @azure/msal-react v2.0.19 2024-06-10 */function a(t,e){return t.length>0}function f(t){const{accounts:e,inProgress:s}=u();return r.useMemo(()=>s===n.Startup?!1:a(e),[e,s,t])}export{f as u};
