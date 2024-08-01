@@ -1,6 +1,6 @@
 
 import { apiClient } from "@/common/hooks/useApiClient";
-import { ApprovalData, ReviewData } from "@/pages/adminpanel/admindashboard/models";
+import { AddToMarketplace, ApprovalData, ReviewData, SaveDeploymentUrl } from "@/pages/adminpanel/admindashboard/models";
 
 const { httpPut ,httpGet} = apiClient();
 
@@ -11,7 +11,10 @@ getApprovedRequests():Promise<any>;
 getDeniedRequests():Promise<any>;
 approveDeveloperRequests(approveForm:ApprovalData):Promise<any>;
 submitReviewForm(reviewForm:ReviewData):Promise<any>;
-
+getDeployedApps():Promise<any>;
+getDeploymentDetailsofApps(email:string,appName:string):Promise<any>;
+submitDeploymentUrl(deploymentUrls:SaveDeploymentUrl):Promise<any>;
+moveToMarketplace(appdetail:AddToMarketplace):Promise<any>;
 }
 
 export class AdminService implements IAdminService{
@@ -43,6 +46,29 @@ export class AdminService implements IAdminService{
         return httpPut('admin/save-analysis',reviewForm).
         then((response)=>response)
     }
+
+    getDeployedApps(): Promise<any> {
+        return httpGet('admin/deployment/display')
+        .then((response)=>response)
+    }
+
+    getDeploymentDetailsofApps(email:string,appName:string): Promise<any> {
+        return httpGet(`admin/deployment/appdetail/${email}/${appName}`)
+        .then((response)=>response) 
+    }
+
+    submitDeploymentUrl(deploymentUrls: SaveDeploymentUrl): Promise<any> {
+        return httpPut('admin/deployment-link',deploymentUrls)
+        .then((response)=>response)
+    }
+
+    moveToMarketplace(appdetail: AddToMarketplace): Promise<any> {
+        return httpPut('admin/deployment/website',appdetail)
+        .then((response)=>response)
+    }
+
+
+
 
 
 }

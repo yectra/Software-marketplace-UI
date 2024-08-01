@@ -36,7 +36,7 @@ interface AccountDetails {
 export const getUserDetailsFromMsal = (accounts: AccountInfo[]): AccountDetails => {
   if (accounts.length > 0) {
     const account = accounts[0];
-    console.log(account);
+
     return {
       email: account.username, 
       name: account.idTokenClaims?.given_name || '', 

@@ -21,7 +21,12 @@ const AppMarketplace = () => {
     marketPlaceApplications
       .getAllApplications()
       .then((response) => {
-        setAvailableApps(response);
+      console.log(response)
+        if (Array.isArray(response)) {
+          setAvailableApps(response);
+        } else {
+          console.error("Response is not an array", response);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -39,21 +44,22 @@ const AppMarketplace = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {availableApps.map?.((app) => (
-          <Grid item xs={4} sm={4} md={4} key={app.appId}>
+        {availableApps.map((app) => (
+          <Grid item xs={4} sm={4} md={4} key={app.app_id}>
             <Item>
               <Appdetails
                 appName={app.appName}
                 shortDescription={app.shortDescription}
-                icon={app.icon}
-                appId={app.appId}
+                appLogo={app.appLogo}
+                app_id={app.app_id}
                 overallRating={app.overallRating}
+                version_id={app.version_id}
               />
             </Item>
           </Grid>
         ))}
       </Grid>
-      {/* <Apps/> */}
+ 
     </Box>
   );
 };

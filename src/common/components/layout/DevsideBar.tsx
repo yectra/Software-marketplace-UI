@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { List, ListItem, ListItemText, Collapse, Drawer, Typography} from "@mui/material";
-import AppsIcon from "@mui/icons-material/Apps";
-import HomeIcon from "@mui/icons-material/Home";
+import RoofingOutlinedIcon from '@mui/icons-material/RoofingOutlined';
+import AppRegistrationRoundedIcon from '@mui/icons-material/AppRegistrationRounded';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import AirplayOutlinedIcon from '@mui/icons-material/AirplayOutlined';
 import { useNavigate } from 'react-router-dom';
 
 const DevsideBar = () => {
   const [openApps, setOpenApps] = useState(true);
-  const [activeItem, setActiveItem] = useState("Home");
+  const [activeItem, setActiveItem] = useState("Create App");
   const navigate = useNavigate();
 
   const handleItemClick = (text: string) => {
@@ -45,7 +47,7 @@ const DevsideBar = () => {
                 color: activeItem === text ? "lightblue" : "black",
               }}
             >
-                {text === "Home" ? <HomeIcon /> : <AppsIcon />}
+                {text === "Home" ? <RoofingOutlinedIcon /> : <AppRegistrationRoundedIcon/>}
               <ListItemText primary={text} sx={{fontWeight:"bold",ml:2}} />
             </ListItem>
             {text === "Apps" && (
@@ -59,9 +61,12 @@ const DevsideBar = () => {
                         color: activeItem === subtext ? "lightblue" : "black",
                       }}
                     >
+                    
+                        {subtext === "Create App" ? <AddOutlinedIcon  sx={{ml:1,mr:1.5,width:"30px"}}/> : <AirplayOutlinedIcon sx={{ml:1,mr:1.5,width:"30px"}}/>}
+                   
                       <ListItemText
                         primary={
-                          <Typography variant="body2" sx={{ fontSize: '0.875rem', ml: 5}}>
+                          <Typography variant="body2" sx={{ fontSize: '0.875rem'}}>
                             {subtext}
                           </Typography>
                         }

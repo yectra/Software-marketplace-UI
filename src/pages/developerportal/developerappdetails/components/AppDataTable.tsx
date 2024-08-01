@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ApprovalStatus, MyAppsData } from "@/pages/developerportal/developerappdetails/model";
-import { getUserDetailsFromMsal, signInUser } from "@/common/services/AuthHelper";
+import {
+  ApprovalStatus,
+  MyAppsData,
+} from "@/pages/developerportal/developerappdetails/model";
+import {
+  getUserDetailsFromMsal,
+  signInUser,
+} from "@/common/services/AuthHelper";
 import { AppInfo } from "@/pages/developerportal/developerappdetails/services";
 import { StyledTableCell, StyledTableRow } from "@/common/UI/StyledElements";
 import useLoading from "@/common/hooks/useLoading";
@@ -27,13 +33,12 @@ import {
 
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 
-
-const DataTable:React.FC = () => {
+const DataTable: React.FC = () => {
   const [tabValue, setTabValue] = useState<number>(0);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
-  const [rows, setRows] = useState<MyAppsData[]>([]);
-  const {isLoading,setLoading}=useLoading();
+  const [developerApps, setDeveloperApps] = useState<MyAppsData[]>([]);
+  const { isLoading, setLoading } = useLoading();
   const { instance, inProgress, accounts } = useMsal();
 
   const isAuthenticated = useIsAuthenticated();
@@ -45,23 +50,25 @@ const DataTable:React.FC = () => {
     setEmail(userDetails.email);
   }, [isAuthenticated, accounts]);
 
-  const getAppsbasedonStatus = async ({ status }: { status: string }) => {
+  const getAppsbasedonStatus =  ({ status }: { status: string }) => {
     const approvalStatus: ApprovalStatus = {
       email: email,
       status: status,
     };
-    try {
-      setLoading(true);
-      const response = await appInfo.getAppsbasedonStatus(approvalStatus);
-      console.log(response);
-      setRows(response);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setRows([]);
-    }
-    finally{
-      setLoading(false);
-    }
+
+    setLoading(true);
+    appInfo
+      .getAppsbasedonStatus(approvalStatus)
+      .then((response) => {
+        console.log(response);
+        setDeveloperApps(response);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setDeveloperApps([]);
+        setLoading(false);
+      });
   };
 
   const handleChange = (_: React.SyntheticEvent, newValue: number): void => {
@@ -81,24 +88,25 @@ const DataTable:React.FC = () => {
     }
   }, [email]);
 
-  const getAppsbySearch = async (value: string): Promise<void> => {
+  const getAppsbySearch = (value: string) => {
     console.log(value);
     setLoading(true);
     if (value === "") {
-     await getAppsbasedonStatus({ status: "all" });
-    } else {
-      try {
-        const response = await appInfo.getAppsBySearch(email, value);
-        console.log(response);
-        setRows(response[0]);
-      } catch (error) {
-        console.error("Error searching:", error);
-        setRows([]);
-      }finally
-      {
-        setLoading(false);
-      }
+      getAppsbasedonStatus({ status: "all" });
     }
+
+    appInfo
+      .getAppsBySearch(email, value)
+      .then((response) => {
+        console.log(response);
+        setDeveloperApps(response);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setDeveloperApps([]);
+        console.error("Error searching:", error);
+        setLoading(false)
+      });
   };
 
   const handleSignIn = (): void => {
@@ -141,7 +149,7 @@ const DataTable:React.FC = () => {
 
   return (
     <Box>
-      <LoadingBackdrop isLoading={isLoading}/>
+      <LoadingBackdrop isLoading={isLoading} />
       <Box
         sx={{
           display: "flex",
@@ -196,23 +204,23 @@ const DataTable:React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map?.((row) => (
-              <StyledTableRow key={row.appName}>
+            {developerApps.map?.((apps) => (
+              <StyledTableRow key={apps.appName}>
                 <StyledTableCell
                   component="th"
                   scope="row"
                   sx={{ cursor: "pointer" }}
-                  onClick={() => handleAppClick(row.appName)}
+                  onClick={() => handleAppClick(apps.appName)}
                 >
-                  {row.appName}
+                  {apps.appName}
                 </StyledTableCell>
                 <StyledTableCell
                   sx={{
                     color: (() => {
                       const latestStatus =
-                        row.versions[row.versions.length - 1]?.status;
+                        apps.versions[apps.versions.length - 1]?.status;
                       switch (latestStatus) {
-                        case "approved":
+                        case "accepted":
                           return "green";
                         case "inprogress":
                           return "#367CFF";
@@ -224,54 +232,55 @@ const DataTable:React.FC = () => {
                     })(),
                   }}
                 >
-                  {row.versions.length > 0
-                    ? row.versions[row.versions.length - 1].status
+                  {apps.versions.length > 0
+                    ? apps.versions[apps.versions.length - 1].status
                     : "N/A"}
                 </StyledTableCell>
                 <StyledTableCell>
-                  {row.versions.length > 0
-                    ? row.versions[row.versions.length - 1].appVersion
+                  {apps.versions.length > 0
+                    ? apps.versions[apps.versions.length - 1].appVersion
                     : "N/A"}
                 </StyledTableCell>
                 <StyledTableCell>
-                  {row.versions.length > 0
-                    ? row.versions[row.versions.length - 1].updatedOn
+                  {apps.versions.length > 0
+                    ? apps.versions[apps.versions.length - 1].updatedOn
                     : "N/A"}
                 </StyledTableCell>
                 <StyledTableCell>
-                  {row.versions[row.versions.length - 1].approvedStatus ===
+                  {apps.versions[apps.versions.length - 1].approvedStatus ===
                   "accepted" ? (
                     <BaseButton
                       variant="text"
                       color="primary"
                       name="Monitor your site"
-                      onClick={() => handleMonitorClick(row.appName)}
-                    >
-      
-                    </BaseButton>
-                  ) : row.versions[row.versions.length - 1].approvedStatus ===
+                      onClick={() => handleMonitorClick(apps.appName)}
+                    ></BaseButton>
+                  ) : apps.versions[apps.versions.length - 1].approvedStatus ===
                     "pending" ? (
                     <BaseButton
                       variant="text"
                       name=" Monitor your site"
                       color="primary"
-                      onClick={() => handleMonitorClick(row.appName)}
+                      onClick={() => handleMonitorClick(apps.appName)}
                       disabled
-                    >
-                     
-                    </BaseButton>
+                    ></BaseButton>
                   ) : (
                     <BaseButton
-                    variant="text"
-                    color="primary"
-                    onClick={() => handleUploadClick(row.appName)}
-                    name={row.versions[row.versions.length - 1].appVersion === "0.0.0" ? "Upload" : "Update"}
-                  />                  
+                      variant="text"
+                      color="primary"
+                      onClick={() => handleUploadClick(apps.appName)}
+                      name={
+                        apps.versions[apps.versions.length - 1].appVersion ===
+                        "0.0.0"
+                          ? "Upload"
+                          : "Update"
+                      }
+                    />
                   )}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
-            {rows.length === 0 && (
+            {developerApps.length === 0 && (
               <TableRow>
                 <TableCell colSpan={5} align="center">
                   No Apps to display

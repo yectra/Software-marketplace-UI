@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { DeveloperApp, ApprovalData, AppDetails, ReviewData } from "@/pages/adminpanel/admindashboard/models";
+import {
+  DeveloperApp,
+  ApprovalData,
+  AppDetails,
+  ReviewData,
+} from "@/pages/adminpanel/admindashboard/models";
 import ReviewForm from "@/pages/adminpanel/admindashboard/components/ReviewForm";
 import CustomSnackbar from "@/common/components/feedback/CustomSnackbar";
 import { StyledTableCell, StyledTableRow } from "@/common/UI/StyledElements";
@@ -38,11 +43,15 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
   const [isApproval, setIsApproval] = useState<boolean>(true);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState<string>('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<string>("");
 
   const adminService = new AdminService();
 
-  const handleAction = (email: string, app: DeveloperApp, approval: boolean) => {
+  const handleAction = (
+    email: string,
+    app: DeveloperApp,
+    approval: boolean
+  ) => {
     setDialogOpen(true);
     setSelectedEmail(email);
     setSelectedApp(app);
@@ -59,24 +68,22 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
     setSnackbarOpen(false);
   };
 
-  const fetchData = async () => {
+  const fetchData = () => {
     setLoading(true);
-    try {
-      const response = await adminService.getPendingRequests();
-      console.log(response);
-      if (Array.isArray(response) && response.length > 0) {
-        setRows(response);
-      } else {
-        console.log("Empty or invalid data received:", response);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Failed to fetch data. Please try again.');
-      setSnackbarOpen(true);
-    } finally {
-      setLoading(false);
-    }
+    adminService
+      .getPendingRequests()
+      .then((response) => {
+        if (Array.isArray(response) && response.length > 0) {
+          setRows(response);
+        } else {
+          console.log("Empty or invalid data received:", response);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   };
 
   const handleSubmit = async (reviewData: ReviewData) => {
@@ -87,7 +94,7 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
         isApproval: isApproval,
         email: selectedEmail,
         appName: selectedApp.appName,
-        version: latestVersion,
+        appVersion: latestVersion,
         readability: reviewData.readability,
         maintainability: reviewData.maintainability,
         vulnerability: reviewData.vulnerability,
@@ -96,25 +103,26 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
         optimization: reviewData.optimization,
         codeDescription: reviewData.codeDescription,
         adminComments: reviewData.adminComments,
-        ratings: reviewData.ratings
+        ratings: reviewData.ratings,
       };
 
-      try {
-        console.log(reviewData);
-         const response=await adminService.approveDeveloperRequests(approveform);
-         console.log(response)
-        setSnackbarSeverity('success');
-        setSnackbarMessage('Review sent successfully.');
-      } catch (error) {
-        console.error("Error approving data:", error);
-        setSnackbarSeverity('error');
-        setSnackbarMessage('Error completing action.');
-      } finally {
-        await fetchData();
-        setLoading(false);
-        handleDialogClose();
-        setSnackbarOpen(true);
-      }
+      adminService
+        .approveDeveloperRequests(approveform)
+        .then((response) => {
+          setSnackbarSeverity("success");
+          setSnackbarMessage("Review sent successfully." + response);
+        })
+        .catch((err) => {
+          console.error("Error approving data:", err);
+          setSnackbarSeverity("error");
+          setSnackbarMessage("Error completing action.");
+        })
+        .finally(() => {
+          fetchData();
+          setLoading(false);
+          handleDialogClose();
+          setSnackbarOpen(true);
+        });
     } else {
       console.error("No versions available to approve.");
       setLoading(false);
@@ -142,7 +150,9 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
             freeSolo
             id="app-search"
             disableClearable
-            options={rows.flatMap(row => row.developerApps.map(app => app.appName))}
+            options={rows.flatMap((row) =>
+              row.developerApps.map((app) => app.appName)
+            )}
             sx={{ width: 300, height: 40, p: 2 }}
             renderInput={(params) => (
               <TextField
@@ -203,9 +213,7 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
                         "N/A"
                       )}
                     </TableCell>
-                    <TableCell>
-                      {app.dockerHubLink ?? "N/A"}
-                    </TableCell>
+                    <TableCell>{app.dockerHubLink ?? "N/A"}</TableCell>
                     <TableCell>
                       <>
                         <Button
@@ -234,7 +242,11 @@ const ApprovalDetails: React.FC<Iprops> = ({ title }) => {
       <Dialog open={dialogOpen} onClose={handleDialogClose} fullScreen>
         <DialogTitle>Enter Feedback</DialogTitle>
         <DialogContent>
-          <ReviewForm onClose={handleDialogClose} onSubmit={handleSubmit} loading={isLoading} />
+          <ReviewForm
+            onClose={handleDialogClose}
+            onSubmit={handleSubmit}
+            loading={isLoading}
+          />
         </DialogContent>
       </Dialog>
       <CustomSnackbar

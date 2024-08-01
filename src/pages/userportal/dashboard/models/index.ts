@@ -1,7 +1,9 @@
 export class getApps{
-    appId:string;
+    app_id:string;
     appName:string;
     shortDescription:string;
     overallRating:string;
-    icon:string
+    overallRatingCount:string;
+    appLogo:string;
+    version_id:string
 }

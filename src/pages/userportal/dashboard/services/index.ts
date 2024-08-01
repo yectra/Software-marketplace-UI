@@ -10,7 +10,7 @@ export interface IMarketplaceApplications{
 
 export class MarketplaceApplications implements IMarketplaceApplications{
     getAllApplications(): Promise<any> {
-        return httpGet('/user/approved-apps')
+        return httpGet('/user/userdisplay')
         .then(response=>response)
     }
 }

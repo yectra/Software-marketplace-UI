@@ -16,10 +16,11 @@ const UserProfile=React.lazy(()=>import('@/pages/developerportal/devdashboard/Co
 const DevDashboard=React.lazy(()=>import('@/pages/developerportal/devdashboard/Views/DevDashboard'))
 const BuildApp = React.lazy(() => import('@/pages/developerportal/developmentstarter/view/BuildApp'));
 const DeveloperApps = React.lazy(() => import('@/pages/developerportal/developerappdetails/views/DeveloperApps'));
-const ManageAppdetails=React.lazy(()=>import ('@/pages/developerportal/updateapp/views/ManageAppdetails'))
-const DeploymentDetails=React.lazy(()=>import('@/pages/developerportal/developerappdetails/views/DeploymentDetails'))
-const UpdateDetails = React.lazy(() => import('@/pages/developerportal/updateapp/components/UpdateDetails'));
+const UploadAppDetails=React.lazy(()=>import ('@/pages/developerportal/updateapp/views/UploadAppDetails'))
+const UpdateDetails = React.lazy(() => import('@/pages/developerportal/updateapp/components/UpdateAppDetails'));
 const PreviousVersionsData=React.lazy(()=>import('@/pages/developerportal/appdescription/views/PreviousVersionsData'))
+const DeploymentDetails=React.lazy(()=>import('@/pages/developerportal/developerappdetails/views/DeploymentDetails'))
+const DeployedApps=React.lazy(()=>import('@/pages/adminpanel/admindashboard/components/DeployedApps'))
 
 
 // Docs Pages
@@ -77,7 +78,7 @@ const routes = [
                     },
                     {
                         path: 'upload/:appName',
-                        element: <ManageAppdetails />
+                        element: <UploadAppDetails />
                     },
                     {
                         path: 'monitor/:appName',
@@ -129,6 +130,11 @@ const routes = [
                     },
                     {
                         path:'deployment-center',
+                        element:<DeployedApps/>
+
+                    },
+                    {
+                        path:'deployment-center/:appName',
                         element:<DeploymentCenter/>
                     }
                 ]

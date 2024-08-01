@@ -23,12 +23,12 @@ export class UpdateAppdetails {
     keywords: string;
     gitHubLink: string;
     dockerHubLink: string;
-    appVersion:string
+    appVersion:string;
   }
 
   export const categories = [
     { value: 'Productivity', label: 'Productivity' },
-    { value: 'Utility', label: 'Games' },
+    { value: 'Games', label: 'Games' },
     { value: 'Entertainment', label: 'Entertainment' },
     { value: 'Education', label: 'Education' },
   ];

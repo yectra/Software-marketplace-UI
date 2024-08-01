@@ -18,7 +18,7 @@ export interface IApiClient {
 }
 export default class ApiClient implements IApiClient {
   public axiosInstance: AxiosInstance;
-  private baseUrl: string = "http://localhost:3000/";
+  private baseUrl: string = "http://localhost:3000/api/";
   constructor() {
     this.axiosInstance = this.createAxiosInstance();
   }

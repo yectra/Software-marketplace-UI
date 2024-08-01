@@ -9,13 +9,16 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
+import { UpdateDeveloperDetails } from '../models';
+import useLoading from '@/common/hooks/useLoading';
+import LoadingBackdrop from '@/common/UI/LoadingBackdrop';
 
 const UserProfile: React.FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [age, setAge] = useState<number | "">("");
+  const [age, setAge] = useState<number>(0);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [country, setCountry] = useState<string>("");
@@ -25,6 +28,7 @@ const UserProfile: React.FC = () => {
   const [approvedAppsCount, setApprovedAppsCount] = useState<number>(0);
   const [inProgressCount, setInProgressCount] = useState<number>(0);
   const [deniedAppsCount, setDeniedAppsCount] = useState<number>(0);
+  const {isLoading,setLoading}=useLoading();
 
   const { accounts } = useMsal();
   const isAuthenticated = useIsAuthenticated();
@@ -41,17 +45,40 @@ const UserProfile: React.FC = () => {
 
   const handleSave = () => {
     setIsEditing(false);
+    setLoading(true);
+    const developerDetails:UpdateDeveloperDetails={
+      email,
+      userName:firstName,
+      age,
+      phoneNumber,
+      dob,
+      city,
+      country,
+      profession,
+      gitAccount
+    }
+    developerInfo.saveDeveloperInfo(developerDetails)
+    .then((response)=>{
+      console.log(response);
+      setLoading(false);
+    })
+    .catch((err)=>
+    {
+      console.log(err)
+      setLoading(false);
+    })
   };
 
   const developerInfo = new DeveloperInfo();
 
   useEffect(() => {
     if (email) {
+      setLoading(true);
       const fetchProfile = async () => {
         const response = await developerInfo.getDeveloperProfile(email);
         setFirstName(response.userName || "");
         setLastName(response.lastName || "");
-        setAge(response.age || "");
+        setAge(response.age || 0);
         setPhoneNumber(response.phoneNumber || "");
         setCity(response.city || "");
         setCountry(response.country || "");
@@ -62,15 +89,18 @@ const UserProfile: React.FC = () => {
         setInProgressCount(response.inProgressCount || 0);
         setDeniedAppsCount(response.deniedAppsCount || 0);
         console.log(response);
+        setLoading(false);
       };
       fetchProfile();
+
     }
   }, [email]);
 
   return (
     <Grid container spacing={2}>
+      <LoadingBackdrop isLoading={isLoading}/>
       <Grid item xs={7}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', mt: 10, ml: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box display="flex" alignItems="center" mb={2}>
             <Avatar sx={{ width: 56, height: 56, bgcolor: 'pink' }}>{firstName[0]}</Avatar>
             <Button variant="outlined" size="small" sx={{ marginLeft: '10px' }}>Upload photo</Button>
@@ -125,9 +155,9 @@ const UserProfile: React.FC = () => {
             <Grid item xs={6}>
               <TextField
                 label="Age"
-                type="string"
+                type="number"
                 value={age}
-                onChange={(e) => setAge(e.target.value === "" ? "" : Number(e.target.value))}
+                onChange={(e) => setAge(parseInt(e.target.value, 10))}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -207,7 +237,7 @@ const UserProfile: React.FC = () => {
       <Grid item xs={5}>
         <Box
           sx={{
-            mt: 21,
+            mt: 11,
             padding: '16px',
             border: '1px solid #e0e0e0',
             borderRadius: '8px',

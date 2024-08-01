@@ -1,11 +1,12 @@
 import { Box } from "@mui/material"
 
-import { Titlecard } from "@/pages/developerportal/devdashboard/Components/Titlecard"
+
+import DeveloperDescription from "@/pages/developerportal/devdashboard/Components/Developerdescription"
 
 const DevDashboard :React.FC= () => {
   return (
      <Box>
-     <Titlecard/>
+   <DeveloperDescription/>
     </Box>
   )
 }

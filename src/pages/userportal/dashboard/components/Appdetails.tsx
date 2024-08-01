@@ -9,19 +9,22 @@ import StarIcon from '@mui/icons-material/Star';
 import InfoIcon from '@mui/icons-material/Info';
 
 interface Iprops{
-    appId:string,
+    app_id:string,
     appName:string,
     shortDescription:string,
     overallRating:string,
-    icon:string
+
+    appLogo:string,
+    version_id:string
 }
 
 const Appdetails:React.FC<Iprops> = ( {
   appName,
-  icon,
+  appLogo,
   shortDescription,
-  appId,
-  overallRating
+  app_id,
+  overallRating,
+  version_id
 }) => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -29,9 +32,10 @@ const Appdetails:React.FC<Iprops> = ( {
   const handleBoxClick = () => {
     const formattedTitle = formatTitleForUrl(appName)
     navigate(`/app/${formattedTitle}`, {
-      state: { appName, icon,
+      state: { appName, appLogo,
         shortDescription,
-        appId,
+        app_id,
+        version_id,
         overallRating},
     });
   };
@@ -71,7 +75,7 @@ const Appdetails:React.FC<Iprops> = ( {
           }}
         >
           <img
-            src={icon}
+            src={appLogo}
             alt="app logo"
             style={{
               width: '40px',
@@ -112,7 +116,7 @@ const Appdetails:React.FC<Iprops> = ( {
             sx={{ fontSize: 'inherit', verticalAlign: 'middle', ml: 0.5 }}
           />
           <Typography variant="overline" sx={{ color: 'grey', ml: 0.5 }}>
-            (3.8K)
+            (2)
           </Typography>
           <InfoIcon sx={{ color: 'grey', fontSize: '1.0rem' }} />
         </Box>

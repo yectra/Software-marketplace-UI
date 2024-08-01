@@ -1,49 +1,32 @@
 import { apiClient } from "@/common/hooks/useApiClient";
-import { AddReviewForm, Answerparams, QuestionParams } from "@/pages/userportal/appoverview/models";
+import { AddReviewForm } from "../models";
 
 
 
 const { httpGet,httpPost} = apiClient();
 
 export interface IGetApplications{
-    getApplicationdetails(appId:string):Promise<any>;
-    getApplicationOverview(appId:string):Promise<any>;
-    getApplicationOverallRating(appId:string):Promise<any>;
-    addApplicationRating(appId:string,reviewForm:AddReviewForm):Promise<any>;
-    addVoteForRating(appId:string,reviewId:string,voteType:boolean):Promise<any>;
-    getQnAforApps(appId:string):Promise<any>;
-    addQuestionsForApps(appId:string,questions:QuestionParams):Promise<any>;
-    addAnswerForQuestions(appId:string,questionId:string,answers:Answerparams):Promise<any>;
+    getApplicationdetails(appId:string,version_id:string):Promise<any>;
+    getApplicationOverview(appId:string,version_id:string):Promise<any>;
+    getApplicationReviews(app_id:string):Promise<any>;
+    addApplicationReview(app_id:string,reviewData:AddReviewForm):Promise<any>;
+  
 }
 
 export class GetApplications implements IGetApplications{
-   getApplicationdetails(appId:string): Promise<any> {
-       return httpGet(`user/approved-apps/${appId}`)
+   getApplicationdetails(appId:string,version_id:string): Promise<any> {
+       return httpGet(`user/appdetails/${appId}/${version_id}`)
    }
-   getApplicationOverview(appId: string): Promise<any> {
-       return httpGet(`/user/approved-apps/${appId}/overview`)
+   getApplicationOverview(app_id: string,version_id:string): Promise<any> {
+       return httpGet(`/user/app-overview/${app_id}/${version_id}`)
    }
-   getApplicationOverallRating(appId: string): Promise<any> {
-       return httpGet(`/user/approved-apps/${appId}/overall-ratings`)
+   getApplicationReviews(app_id: string): Promise<any> {
+       return httpGet(`/user/review/display/${app_id}`)
    }
-   addApplicationRating(appId: string,reviewForm:AddReviewForm): Promise<any> {
-       return httpPost(`user/approved-apps/${appId}/add-rating`,reviewForm)
-   }
-   addVoteForRating(appId: string, reviewId: string,voteType:boolean): Promise<any> {
-       return httpPost(`/user/approved-apps/${appId}/review/${reviewId}/vote`,{voteType:voteType})
-   }
-   getQnAforApps(appId: string): Promise<any> {
-       return httpGet(`/user/approved-apps/${appId}/questions-answers`)
+   addApplicationReview(app_id: string,reviewData:AddReviewForm): Promise<any> {
+       return httpPost(`/user/review/${app_id}`,reviewData)
    }
 
-   addQuestionsForApps(appId: string, questions: QuestionParams): Promise<any> {
-       return httpPost(`/user/approved-apps/${appId}/questions`,questions)
-   }
-
-   addAnswerForQuestions(appId: string,questionId:string,answers:Answerparams): Promise<any> {
-       return httpPost(`/user/approved-apps/${appId}/questions/${questionId}/answers`,answers)
-   }
-
-
+  
 
 }

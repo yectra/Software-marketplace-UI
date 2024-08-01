@@ -14,7 +14,11 @@ const MainLayout = () => {
   let appbar;
   if (pathname.includes("/developer")) {
     appbar = <DevappBar />;
-  } else if (pathname.includes("/docs")) {
+
+  }
+  else if (pathname.includes("/admin")) {
+    appbar = <DevappBar />;
+  }  else if (pathname.includes("/docs")) {
     appbar = <DocsNavbar />;
   } else {
     appbar = <Appbar />;
@@ -22,7 +26,7 @@ const MainLayout = () => {
 
   let sidebar = null;
   if (!pathname.startsWith("/developer/profile")) {
-    if (pathname.startsWith("/developer")) {
+    if (pathname.startsWith("/developer") && pathname !== "/developer" ) {
       sidebar = <DevsideBar />;
     } else if (pathname.includes("/admin")) {
       sidebar = <AdminSidebar />;

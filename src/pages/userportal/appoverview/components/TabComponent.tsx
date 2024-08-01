@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import OverviewCard from '@/pages/userportal/appoverview/components/OverviewCard';
 import UserReview from '@/pages/userportal/appoverview/components/UserReview';
-import QnA from '@/pages/userportal/appoverview/components/QnA';
+//import QnA from '@/pages/userportal/appoverview/components/QnA';
 
 
 import { Tabs, Tab, Box } from '@mui/material';
@@ -79,7 +79,7 @@ function TabComponent() {
         <OverviewCard/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <QnA/>
+        {/* <QnA/> */}
       </TabPanel>
       <TabPanel value={value} index={2}>
        <UserReview/>

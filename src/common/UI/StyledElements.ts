@@ -22,13 +22,14 @@ import { IconButton, InputBase, Modal, Paper, styled, TableCell, tableCellClasse
   export const StyledModal = styled(Modal)({
     display: 'flex',
     alignItems: 'center',
+    width:"100%",
     justifyContent: 'center',
     overflow: 'auto', 
   });
 
   export const IframeContainer = styled('div')({
     position: 'relative',
-    width: '90vw',  
+    width: '100vw',  
     maxWidth: '1280px',
     height: '100vh',
     backgroundColor: 'white',
